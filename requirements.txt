@@ -4,5 +4,7 @@ peft
 accelerate
 datasets
 bitsandbytes
+flash-attn
 wandb
 ml_collections
+huggingface_hub[cli]
