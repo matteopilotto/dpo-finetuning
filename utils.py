@@ -2,6 +2,7 @@ import torch
 from transformers import GenerationConfig
 from transformers.integrations import WandbCallback
 import wandb
+from tqdm.auto import tqdm
 
 
 class LLMSampleCB(WandbCallback):
@@ -25,7 +26,7 @@ class LLMSampleCB(WandbCallback):
     def samples_table(self, examples):
         records_table = wandb.Table(columns=["prompt", "generation"] + list(self.gen_config.to_dict().keys()))
         for example in tqdm(examples, leave=False):
-            prompt = example["text"]
+            prompt = example["prompt"]
             generation = self.generate(prompt=prompt)
             records_table.add_data(prompt, generation, *list(self.gen_config.to_dict().values()))
         return records_table
